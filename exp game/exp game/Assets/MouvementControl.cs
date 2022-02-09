@@ -13,6 +13,8 @@ public class MouvementControl : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+    public bool isSprinting = false;
+    public float sprintingMultiplier;
     
     Vector3 velocity;
     bool isGrounded;
@@ -35,6 +37,7 @@ public class MouvementControl : MonoBehaviour
         controller.Move(move * speed * Time.deltaTime);
 
         if(Input.GetButtonDown("Jump") && isGrounded)
+
         {
             velocity.y =Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -42,5 +45,31 @@ public class MouvementControl : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
-    }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            isSprinting = true;
+        }
+        else
+        {
+            isSprinting = false;     
+        }
+
+        if (isSprinting == true)
+        {
+            speed *= sprintingMultiplier;
+        }
+
+        if (speed > 36f)
+        {
+            speed = 36f;
+        }
+
+        if (isSprinting == false)
+
+        if (speed > 12f)
+        {
+            speed = 12f;
+        }
+    }   
 }
